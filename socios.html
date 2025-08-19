@@ -1,0 +1,57 @@
+<!-- Estructura del Módulo de Socios -->
+<div id="socios-module">
+    <!-- Encabezado y botón de acción -->
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-semibold text-slate-700">Listado de Socios</h3>
+        <button id="add-socio-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+            + Añadir Socio
+        </button>
+    </div>
+
+    <!-- Contenedor de la tabla de socios -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-slate-500">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                    <tr>
+                        <th scope="col" class="py-3 px-6">Nombres</th>
+                        <th scope="col" class="py-3 px-6">Cédula</th>
+                        <th scope="col" class="py-3 px-6">Teléfono</th>
+                        <th scope="col" class="py-3 px-6">Fecha Ingreso</th>
+                        <th scope="col" class="py-3 px-6">Estado</th>
+                        <th scope="col" class="py-3 px-6">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="socios-table-body">
+                    <!-- Las filas se generan con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Añadir/Editar Socio (inicialmente oculto) -->
+<div id="socio-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl">
+        <h2 id="modal-title" class="text-2xl font-bold mb-6 text-slate-800">Añadir Nuevo Socio</h2>
+        <form id="socio-form">
+            <!-- Campo oculto para el ID del socio (usado para editar) -->
+            <input type="hidden" id="ID_Socio" name="ID_Socio">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="nombres" placeholder="Nombres Completos" class="p-2 border rounded" required>
+                <input type="text" id="apellidos" placeholder="Apellidos Completos" class="p-2 border rounded" required>
+                <input type="text" id="cedula" placeholder="Cédula de Identidad" class="p-2 border rounded" required>
+                <input type="date" id="fechaNacimiento" class="p-2 border rounded" required>
+                <input type="text" id="telefono" placeholder="Teléfono Celular" class="p-2 border rounded" required>
+                <input type="email" id="email" placeholder="Correo Electrónico" class="p-2 border rounded">
+                <textarea id="direccion" placeholder="Dirección de Domicilio" class="p-2 border rounded md:col-span-2" rows="2"></textarea>
+            </div>
+            
+            <div class="flex justify-end mt-6 space-x-4">
+                <button type="button" id="cancel-btn" class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancelar</button>
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Guardar Socio</button>
+            </div>
+        </form>
+    </div>
+</div>
