@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caja de Ahorros Tupak Rantina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    body{font-family:'Inter',sans-serif}
+    .nav-link.active{background-color:#F97316;color:#fff}
+    .skeleton-row .skeleton{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite;background:#e5e7eb;border-radius:.25rem}
+    @keyframes pulse{50%{opacity:.5}}
+    
+    /* Mobile Navigation */
+    .mobile-nav-overlay { backdrop-filter: blur(4px); }
+    .sidebar-transition { transition: transform 0.3s ease-in-out; }
+    
+    /* Responsive table styles */
+    .responsive-table { min-width: 100%; }
+    @media (max-width: 768px) {
+      .responsive-table { min-width: 800px; }
+      .table-container { padding: 0.5rem; }
+      .modal-content { margin: 1rem; max-height: 90vh; overflow-y: auto; }
+    }
+    
+    /* Better number formatting */
+    .currency { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="bg-slate-100">
+  <!-- Mobile menu overlay -->
+  <div id="mobile-nav-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden mobile-nav-overlay"></div>
+  
+  <div class="flex h-screen bg-slate-800 text-white">
+    <!-- Mobile-responsive sidebar -->
+    <aside id="sidebar" class="fixed lg:relative w-64 h-full flex-shrink-0 bg-slate-800 z-50 transform -translate-x-full lg:translate-x-0 sidebar-transition">
+      <div class="flex items-center justify-between h-20 bg-slate-900 px-4">
+        <h1 class="text-xl lg:text-2xl font-bold text-white">Tupak Rantina</h1>
+        <button id="close-sidebar-btn" class="lg:hidden text-white hover:text-gray-300">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <nav class="mt-8 px-4">
+        <ul class="space-y-2">
+          <li><a id="nav-socios"    href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-slate-700 rounded-lg transition-colors"><i class="fa fa-users w-5"></i> <span>Socios</span></a></li>
+          <li><a id="nav-aportes"   href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-slate-700 rounded-lg transition-colors"><i class="fa fa-wallet w-5"></i> <span>Aportes</span></a></li>
+          <li><a id="nav-creditos"  href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-slate-700 rounded-lg transition-colors"><i class="fa fa-hand-holding-usd w-5"></i> <span>Créditos</span></a></li>
+          <li><a id="nav-cobranzas" href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-slate-700 rounded-lg transition-colors"><i class="fa fa-file-invoice-dollar w-5"></i> <span>Cobranzas</span></a></li>
+          <li><a id="nav-reportes"  href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-slate-700 rounded-lg transition-colors"><i class="fa fa-chart-line w-5"></i> <span>Reportes</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden lg:ml-0">
+      <header class="h-16 lg:h-20 flex items-center justify-between px-4 lg:px-8 bg-white text-slate-800 shadow-md">
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="lg:hidden text-slate-800 hover:text-slate-600">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        
+        <h2 id="module-title" class="text-lg lg:text-3xl font-bold">Bienvenido</h2>
+        
+        <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-2 lg:px-4 rounded-lg transition-colors flex items-center">
+          <svg class="w-4 h-4 lg:w-5 lg:h-5 lg:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          <span class="hidden lg:inline">Cerrar Sesión</span>
+        </button>
+      </header>
+      <div id="contenido-principal" class="flex-1 p-2 lg:p-8 overflow-y-auto bg-slate-100 text-slate-800">
+        
+        <!-- Aquí van a estar todos los módulos incluidos directamente para evitar fetch -->
+        
+      </div>
+    </main>
+  </div>
+
+  <div id="screen-blocker" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+    <div class="text-white text-xl font-semibold animate-pulse">Procesando...</div>
+  </div>
+
+  <script type="module" src="main-integrated.js"></script>
+</body>
+</html>

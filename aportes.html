@@ -2,9 +2,70 @@
 <div id="aportes-module" class="w-full">
   <div class="flex justify-between items-center mb-6">
     <h3 class="text-2xl font-semibold text-slate-700">Listado de Aportes</h3>
-    <button id="add-aporte-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
-      + Añadir Aporte
-    </button>
+    <div class="flex gap-3">
+      <button id="filter-aportes-btn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center">
+        <i class="fas fa-filter mr-2"></i>Filtros
+      </button>
+      <button id="add-aporte-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+        + Añadir Aporte
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel de Filtros para Aportes -->
+  <div id="aportes-filters-panel" class="bg-white p-4 rounded-lg shadow-md mb-6 hidden">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Filtro por socio -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2">Socio</label>
+        <select id="filter-aporte-socio" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+          <option value="">Todos los socios</option>
+        </select>
+      </div>
+      
+      <!-- Filtro por tipo -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2">Tipo de Aporte</label>
+        <select id="filter-tipo-aporte" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+          <option value="">Todos los tipos</option>
+          <option value="Cuota de Afiliación">Cuota de Afiliación</option>
+          <option value="Aporte Mensual">Aporte Mensual</option>
+          <option value="Aporte Extraordinario">Aporte Extraordinario</option>
+          <option value="Aporte Voluntario">Aporte Voluntario</option>
+        </select>
+      </div>
+      
+      <!-- Filtro por monto -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2">Monto Mínimo</label>
+        <input type="number" id="filter-monto-min" placeholder="0.00" step="0.01" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2">Monto Máximo</label>
+        <input type="number" id="filter-monto-max" placeholder="0.00" step="0.01" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+      
+      <!-- Filtro por rango de fechas -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2">Fecha Desde</label>
+        <input type="date" id="filter-aporte-fecha-desde" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-2">Fecha Hasta</label>
+        <input type="date" id="filter-aporte-fecha-hasta" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+    </div>
+    
+    <div class="flex justify-end gap-3 mt-4">
+      <button id="clear-filters-aportes" class="bg-slate-500 text-white px-4 py-2 rounded-lg hover:bg-slate-600 transition-colors">
+        Limpiar Filtros
+      </button>
+      <button id="apply-filters-aportes" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
+        Aplicar Filtros
+      </button>
+    </div>
   </div>
 
   <div class="bg-white p-6 rounded-lg shadow-md">
@@ -30,32 +91,41 @@
 
 <!-- Modal Crear/Editar Aporte -->
 <div id="aporte-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-xl">
+  <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
     <h2 id="aporte-modal-title" class="text-2xl font-bold mb-6 text-slate-800">Añadir Aporte</h2>
     <form id="aporte-form">
       <input type="hidden" id="ID_Aporte">
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2">
-          <label class="block text-sm font-semibold text-slate-600 mb-1">Socio</label>
-          <select id="ID_Socio" class="w-full border rounded p-2" required>
+          <label class="block text-sm font-semibold text-slate-600 mb-2">Socio *</label>
+          <select id="ID_Socio" class="w-full p-3 border rounded-lg" required>
             <!-- opciones cargadas desde la tabla socios -->
           </select>
         </div>
 
         <div>
-          <label class="block text-sm font-semibold text-slate-600 mb-1">Monto</label>
-          <input type="number" step="0.01" id="Monto_Aporte" class="w-full border rounded p-2" required>
+          <label class="block text-sm font-semibold text-slate-600 mb-2">Monto del Aporte *</label>
+          <input type="number" step="0.01" id="Monto_Aporte" class="w-full p-3 border rounded-lg" required placeholder="0.00">
         </div>
 
         <div>
-          <label class="block text-sm font-semibold text-slate-600 mb-1">Fecha</label>
-          <input type="date" id="Fecha_Aporte" class="w-full border rounded p-2" required>
+          <label class="block text-sm font-semibold text-slate-600 mb-2">Fecha del Aporte *</label>
+          <input type="date" id="Fecha_Aporte" class="w-full p-3 border rounded-lg" required>
         </div>
 
         <div class="md:col-span-2">
-          <label class="block text-sm font-semibold text-slate-600 mb-1">Tipo</label>
-          <input type="text" id="Tipo_Aporte" class="w-full border rounded p-2" placeholder="Tipo de aporte (texto libre)">
+          <label class="block text-sm font-semibold text-slate-600 mb-2">Tipo de Aporte</label>
+          <select id="Tipo_Aporte" class="w-full p-3 border rounded-lg" required>
+            <option value="">Seleccionar tipo de aporte</option>
+            <option value="Cuota de Afiliación">Cuota de Afiliación</option>
+            <option value="Cuota Mensual">Cuota Mensual</option>
+            <option value="Aporte Extraordinario">Aporte Extraordinario</option>
+            <option value="Donación">Donación</option>
+            <option value="Multa">Multa</option>
+            <option value="Recuperación de Cartera">Recuperación de Cartera</option>
+            <option value="Otros">Otros</option>
+          </select>
         </div>
       </div>
 

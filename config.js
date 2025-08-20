@@ -1,16 +1,23 @@
 // config.js — Directus con tokens (Bearer) y refresh vía REST
 export const DIRECTUS_URL = 'https://directus.luispinta.com';
 
-// === Socios (compat: mantiene nombres ya usados) ===
+// === Socios ===
 export const COLLECTION   = 'socios';
 export const PRIMARY_KEY  = 'ID_Socio';
-// === Nombres explícitos (por claridad) ===
 export const SOCIOS_COLLECTION = COLLECTION;
 export const SOCIOS_PK        = PRIMARY_KEY;
 
 // === Aportes ===
 export const APORTES_COLLECTION = 'aportes';
 export const APORTES_PK         = 'ID_Aporte';
+
+// === Créditos ===  ⬅️ NUEVO
+export const CREDITOS_COLLECTION = 'creditos';
+export const CREDITOS_PK         = 'ID_Credito';
+
+// === Cobranzas ===
+export const COBRANZAS_COLLECTION = 'cobranzas';
+export const COBRANZAS_PK         = 'ID_Cobranza';
 
 import {
   createDirectus, rest, authentication, realtime
@@ -21,7 +28,6 @@ export function getClient() {
     .with(rest())
     .with(authentication())
     .with(realtime());
-
   const saved = getSavedTokens();
   if (saved?.access_token) c.setToken(saved.access_token);
   return c;

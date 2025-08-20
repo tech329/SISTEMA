@@ -3,9 +3,55 @@
     <!-- Encabezado y botón de acción -->
     <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-semibold text-slate-700">Listado de Socios</h3>
-        <button id="add-socio-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
-            + Añadir Socio
-        </button>
+        <div class="flex gap-3">
+            <button id="filter-socios-btn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center">
+                <i class="fas fa-filter mr-2"></i>Filtros
+            </button>
+            <button id="add-socio-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+                + Añadir Socio
+            </button>
+        </div>
+    </div>
+
+    <!-- Panel de Filtros (oculto por defecto) -->
+    <div id="socios-filters-panel" class="bg-white p-4 rounded-lg shadow-md mb-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Filtro por estado -->
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Estado</label>
+                <select id="filter-estado" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="">Todos</option>
+                    <option value="activo">Activos</option>
+                    <option value="inactivo">Inactivos</option>
+                </select>
+            </div>
+            
+            <!-- Filtro por búsqueda -->
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Buscar Socio</label>
+                <input type="text" id="filter-buscar" placeholder="Nombre, apellido o cédula..." class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            
+            <!-- Filtro por rango de fechas -->
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Fecha Desde</label>
+                <input type="date" id="filter-fecha-desde" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Fecha Hasta</label>
+                <input type="date" id="filter-fecha-hasta" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+        </div>
+        
+        <div class="flex justify-end gap-3 mt-4">
+            <button id="clear-filters-socios" class="bg-slate-500 text-white px-4 py-2 rounded-lg hover:bg-slate-600 transition-colors">
+                Limpiar Filtros
+            </button>
+            <button id="apply-filters-socios" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                Aplicar Filtros
+            </button>
+        </div>
     </div>
 
     <!-- Contenedor de la tabla de socios -->
@@ -32,20 +78,53 @@
 
 <!-- Modal para Añadir/Editar Socio (inicialmente oculto) -->
 <div id="socio-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl">
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
         <h2 id="modal-title" class="text-2xl font-bold mb-6 text-slate-800">Añadir Nuevo Socio</h2>
         <form id="socio-form">
             <!-- Campo oculto para el ID del socio (usado para editar) -->
             <input type="hidden" id="ID_Socio" name="ID_Socio">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" id="nombres" placeholder="Nombres Completos" class="p-2 border rounded" required>
-                <input type="text" id="apellidos" placeholder="Apellidos Completos" class="p-2 border rounded" required>
-                <input type="text" id="cedula" placeholder="Cédula de Identidad" class="p-2 border rounded" required>
-                <input type="date" id="fechaNacimiento" class="p-2 border rounded" required>
-                <input type="text" id="telefono" placeholder="Teléfono Celular" class="p-2 border rounded" required>
-                <input type="email" id="email" placeholder="Correo Electrónico" class="p-2 border rounded">
-                <textarea id="direccion" placeholder="Dirección de Domicilio" class="p-2 border rounded md:col-span-2" rows="2"></textarea>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Nombres Completos *</label>
+                    <input type="text" id="nombres" class="w-full p-3 border rounded-lg" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Apellidos Completos *</label>
+                    <input type="text" id="apellidos" class="w-full p-3 border rounded-lg" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Cédula de Identidad *</label>
+                    <input type="text" id="cedula" class="w-full p-3 border rounded-lg" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Fecha de Nacimiento</label>
+                    <input type="date" id="fechaNacimiento" class="w-full p-3 border rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Teléfono Celular</label>
+                    <input type="tel" id="telefono" class="w-full p-3 border rounded-lg">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Correo Electrónico</label>
+                    <input type="email" id="email" class="w-full p-3 border rounded-lg">
+                </div>
+                <div class="md:col-span-3">
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Dirección de Domicilio</label>
+                    <textarea id="direccion" class="w-full p-3 border rounded-lg" rows="2" placeholder="Dirección completa del socio"></textarea>
+                </div>
+            </div>
+            
+            <!-- Checkbox para aporte inicial -->
+            <div id="aporte-inicial-section" class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input type="checkbox" id="ingresar-con-aporte" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                    <div>
+                        <span class="text-sm font-semibold text-blue-800">¿Ingresa con aporte?</span>
+                        <p class="text-xs text-blue-600 mt-1">Se registrará automáticamente la Cuota de Afiliación de $20,00</p>
+                    </div>
+                </label>
+            </div>
+                </label>
             </div>
             
             <div class="flex justify-end mt-6 space-x-4">
